@@ -54,9 +54,17 @@ def menu():
             Risorse.aggiungi_risorsa(database,mycursor)
             mydb.commit()
         elif scelta=="3":
-            pass
+            prenotazioni.aggiuntaPrenotazioni(database,mycursor)
+            mydb.commit()
         elif scelta=="4":
-            pass
+            queryMostraPrenotazioni ="SELECT nome,cognome,telefono,marca,modello,prezzo FROM concessionario.prenotazioni JOIN concessionario.risorse on prenotazioni.fk_risorsa = risorse.id JOIN concessionario.utenti on prenotazioni.fk_utente = utenti.id_utente;"
+            mycursor.execute(queryMostraPrenotazioni)
+            myresult = mycursor.fetchall()
+            if len(myresult)>=1:
+                for riga in myresult:
+                    print(f"Nome: {riga[0]} - Cognome {riga[1]} - Telefono {riga[2]} - Marca {riga[3]} - Modello {riga[4]} - Prezzo {riga[5]}")
+            else:
+                print("Database vuoto")
         elif scelta=="5":
             condizione = False
             print("Programma terminato.")
