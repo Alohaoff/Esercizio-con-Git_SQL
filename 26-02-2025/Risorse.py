@@ -1,5 +1,5 @@
 def CreazioneTabRisorse(database, mycursor):
-    queryRisorse = "create or replace table " + database +".Concessionaria(id int auto_increment primary key, Marca varchar(100), Modello varchar(100), Prezzo int)"
+    queryRisorse = "CREATE OR REPLACE TABLE " + database +".risorse(id int auto_increment primary key, marca varchar(100), modello varchar(100), prezzo int)"
     mycursor.execute(queryRisorse) 
     
 def aggiungi_risorsa(database, mycursor):
@@ -7,7 +7,6 @@ def aggiungi_risorsa(database, mycursor):
     modello = input("Inserisci il Modello del veicolo: ")
     prezzo = input("Inserisci il Prezzo del veicolo: ")
 
-    queryInsRisorsa = f"INSERT INTO Concessionaria (Marca, Modello, Prezzo) VALUES ('{marca}', '{modello}', {prezzo});"
-
-    print("Risorsa aggiunta")
-    return queryInsRisorsa
+    queryInsRisorsa = "INSERT INTO "+ database + ".risorse (marca, modello, prezzo) VALUES (%s, %s, %s);"
+    valori =(marca, modello, prezzo)
+    mycursor.execute(queryInsRisorsa, valori)
