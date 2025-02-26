@@ -1,4 +1,6 @@
-
+import Risorse
+import Utenti
+import prenotazioni
 import mysql.connector
 
 host="localhost"
@@ -23,12 +25,9 @@ def crea_replace_db():
         mycursor = mydb.cursor()
         query = "create database " + database
         mycursor.execute(query)
-        # queryUtenti = "create or replace table " + database +".Studenti(id int auto_increment primary key, nome varchar(100), cognome varchar(100), VotoItaliano int, VotoMatematica int, VotoInglese int)"
-        # mycursor.execute(queryUtenti)
-        # queryRisorse = "create or replace table " + database +".Studenti(id int auto_increment primary key, nome varchar(100), cognome varchar(100), VotoItaliano int, VotoMatematica int, VotoInglese int)"
-        # mycursor.execute(queryRisorse)
-        # queryPrenotazioni = "create or replace table " + database +".Studenti(id int auto_increment primary key, nome varchar(100), cognome varchar(100), VotoItaliano int, VotoMatematica int, VotoInglese int)"
-        # mycursor.execute(queryPrenotazioni)
+        Utenti.table_utenti(database,mycursor)
+        Risorse.CreazioneTabRisorse(database,mycursor)
+        prenotazioni.creazionetabellaprenotazioni(database,mycursor)
         
     return mydb
 
@@ -40,18 +39,29 @@ def menu():
     while condizione:
 
         print("\n------| MENU |------")
-        print("6. Reset DB")
-        print("7. Stop")
+        print("1. Aggiungi Utente")
+        print("2. Aggiungi Risorsa")
+        print("3. Aggiungi Prenotazione")
+        print("4. Mostra Prenotazioni")
+        print("5. Stop")
 
         scelta = input("Seleziona un'opzione: ")
 
-        if scelta == "6":
+        if scelta == "1":
+            Utenti.aggiungi_utente(database,mycursor)
+            mydb.commit()
+        elif scelta=="2":
+            Risorse.aggiungi_risorsa(database,mycursor)
+            mydb.commit()
+        elif scelta=="3":
             pass
-        elif scelta=="7":
+        elif scelta=="4":
+            pass
+        elif scelta=="5":
             condizione = False
             print("Programma terminato.")
         else:
-            print("Opzione non valida! Inserisci un numero tra 1 e 3.")
+            print("Opzione non valida! Inserisci un numero tra 1 e 5.")
             
-crea_replace_db()
-            
+crea_replace_db()         
+menu()            

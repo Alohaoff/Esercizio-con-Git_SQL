@@ -1,6 +1,6 @@
 
 def creazionetabellaprenotazioni(database, mycursor):
-        queryPrenotazioni = """create or replace table """ + database + """.Concessionario.Prenotazioni(
+        queryPrenotazioni = """create or replace table """ + database + """.prenotazioni(
             id int auto_increment primary key,
             cliente_nome varchar(100) not null,
             cliente_cognome varchar(100) not null,
@@ -9,6 +9,7 @@ def creazionetabellaprenotazioni(database, mycursor):
             foreign key (veicolo_id) references Veicoli(id) on delete cascade,
             foreign key (risorsa_id) references Risorse(id) on delete cascade
         )"""
+        print(queryPrenotazioni)
         mycursor.execute(queryPrenotazioni)
         
 def aggiuntaPrenotazioni(database, mycursor, mydb):
