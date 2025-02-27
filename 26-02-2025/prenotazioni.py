@@ -34,5 +34,24 @@ def aggiuntaPrenotazioni(database, mycursor):
     valori =(idUtente, idRisorsa)
     mycursor.execute(queryInsRisorsa, valori)
 
+#da provare 
+def cancellaPrenotazione(database, mycursor):
+    queryMostraPrenotazioni = "SELECT * FROM " + database + ".prenotazioni"
+    mycursor.execute(queryMostraPrenotazioni)
+    myresult = mycursor.fetchall()
+    
+    if len(myresult) >= 1:
+        for riga in myresult:
+            print(f"ID Prenotazione: {riga[0]} - ID Risorsa: {riga[1]} - ID Utente: {riga[2]}")
+    else:
+        print("Nessuna prenotazione presente nel database.")
+        return
+    
+    idPrenotazione = input("Inserisci l'ID della prenotazione da cancellare: ")
+    
+    queryCancella = "DELETE FROM " + database + ".prenotazioni WHERE id = %s;"
+    mycursor.execute(queryCancella, (idPrenotazione,))
+    
+    print(f"Prenotazione con ID {idPrenotazione} cancellata con successo.")
 
 
